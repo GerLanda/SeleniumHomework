@@ -41,7 +41,7 @@ public class lesson {
         sortPrice.selectByVisibleText("Дороже");
 
         List<WebElement> webElements = driver.findElements(By.xpath("//div[@class='items-items-38oUm']/div[@data-marker='item']"));
-        for (int i = 0; i < webElements.size(); i++) {
+        for (int i = 0; i < 3; i++) {
             System.out.println("Название " + webElements.get(i).findElement(By.xpath(".//h3[@class='title-root-395AQ iva-item-title-1Rmmj title-list-1IIB_ title-root_maxHeight-3obWc text-text-1PdBw text-size-s-1PUdo text-bold-3R9dt']")).getText());
             System.out.println("Цена " + webElements.get(i).findElement(By.xpath(".//span[@class='price-text-1HrJ_ text-text-1PdBw text-size-s-1PUdo']")).getText());
         }
