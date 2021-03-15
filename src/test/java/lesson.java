@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class lesson {
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "src\\test\\resource\\driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\driver\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         driver.get("https://www.avito.ru");
@@ -70,6 +70,7 @@ public class lesson {
             System.out.println("Название " + webElements.get(i).findElement(By.xpath(".//h3[@class='title-root-395AQ iva-item-title-1Rmmj title-list-1IIB_ title-root_maxHeight-3obWc text-text-1PdBw text-size-s-1PUdo text-bold-3R9dt']")).getText());
             System.out.println("Цена " + webElements.get(i).findElement(By.xpath(".//span[@class='price-text-1HrJ_ text-text-1PdBw text-size-s-1PUdo']")).getText());
         }
+        driver.quit();
 
     }
 }
