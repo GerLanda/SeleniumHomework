@@ -10,35 +10,61 @@ import java.util.concurrent.TimeUnit;
 
 public class lesson {
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "C:\\driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resource\\driver\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         driver.get("https://www.avito.ru");
 
         driver.manage().window().maximize();
+        System.out.println("Разрешение окна: - максимальное.");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
+        System.out.println("Получаем все значения в списки товаров");
         Select category = new Select(driver.findElement(By.xpath("//select[@id='category']")));
-
-
+        category.getOptions().forEach(option->{
+            System.out.println("Value = "+option.getAttribute("value")+";Text = "+option.getText());
+        });
         category.selectByVisibleText("Оргтехника и расходники");
-        driver.findElement(By.xpath("//input[@id='search']")).sendKeys("Принтер");
-        driver.findElement(By.xpath("//div[@class='main-text-2PaZG']")).click();
-        driver.findElement(By.xpath("//input[@class='suggest-input-3p8yi']")).sendKeys("Владивосток");
+        System.out.println("Выбор в категории товаров - \"Оргтехника и расходники\"");
 
-        driver.findElement(By.xpath("//ul[@class='suggest-suggests-bMAdj']/li[@class='suggest-suggest-1wwEm text-text-1PdBw text-size-m-4mxHN']")).click();
+        WebElement productSearch = driver.findElement(By.xpath("//input[@id='search']"));
+        productSearch.sendKeys("Принтер");
+        System.out.println("В поисковой строке продукта ввод: \"Принтер\"");
 
-        driver.findElement(By.xpath("//button[@class='button-button-2Fo5k button-size-m-7jtw4 button-primary-1RhOG']")).click();
+
+        WebElement citySearch = driver.findElement(By.xpath("//div[@class='main-text-2PaZG']"));
+        citySearch.click();
+        System.out.println("Клик по выбору города");
+
+        WebElement citySearchLine = driver.findElement(By.xpath("//input[@class='suggest-input-3p8yi']"));
+        citySearchLine.sendKeys("Владивосток");
+        System.out.println("В поисковой строке города ввод:\"Владивосток\"");
+
+        WebElement citySelection = driver.findElement(By.xpath("//ul[@class='suggest-suggests-bMAdj']/li[@class='suggest-suggest-1wwEm text-text-1PdBw text-size-m-4mxHN']"));
+        citySelection.click();
+        System.out.println("Клик по предложенному значению");
+
+        WebElement citySearchButton = driver.findElement(By.xpath("//button[@class='button-button-2Fo5k button-size-m-7jtw4 button-primary-1RhOG']"));
+        citySearchButton.click();
+        System.out.println("Клик по кнопке поиска объявлений в выбранном городе");
 
         WebElement element = driver.findElement(By.xpath("//div[@data-marker='delivery-filter/container']/label[@class='checkbox-checkbox-7igZ6 checkbox-size-s-yHrZq']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        System.out.println("Скрол вниз до чекбокса");
 
         if (!element.isSelected()) {
             element.click();
         }
+        System.out.println("Устанавливаем чекбокс активным");
 
         Select sortPrice = new Select(driver.findElement(By.xpath("//div[@class='sort-select-3QxXG select-select-box-3LBfK select-size-s-2gvAy']/select[@class='select-select-3CHiM']")));
+        sortPrice.getOptions().forEach(option->{
+            System.out.println("Value = "+option.getAttribute("value")+";Text = "+option.getText());
+        });
         sortPrice.selectByVisibleText("Дороже");
+        System.out.println("Значение сортировки: \"Дороже\"");
+
+        System.out.println("Получаем первые три принтера");
 
         List<WebElement> webElements = driver.findElements(By.xpath("//div[@class='items-items-38oUm']/div[@data-marker='item']"));
         for (int i = 0; i < 3; i++) {
