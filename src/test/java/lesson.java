@@ -31,7 +31,6 @@ public class lesson {
         productSearch.sendKeys("Принтер");
         System.out.println("В поисковой строке продукта ввод: \"Принтер\"");
 
-
         WebElement citySearch = driver.findElement(By.xpath("//div[@class='main-text-2PaZG']"));
         citySearch.click();
         System.out.println("Клик по выбору города");
