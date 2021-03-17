@@ -19,46 +19,49 @@ public class lesson {
         System.out.println("Разрешение окна: - максимальное.");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        Select category = new Select(driver.findElement(By.xpath("//select[@id='category']")));
-        WebElement productSearch = driver.findElement(By.xpath("//input[@id='search']"));
-        WebElement citySearch = driver.findElement(By.xpath("//div[@class='main-text-2PaZG']"));
-        WebElement citySearchLine = driver.findElement(By.xpath("//input[@class='suggest-input-3p8yi']"));
-        WebElement citySelection = driver.findElement(By.xpath("//ul[@class='suggest-suggests-bMAdj']/li[@class='suggest-suggest-1wwEm text-text-1PdBw text-size-m-4mxHN']"));
-        WebElement citySearchButton = driver.findElement(By.xpath("//button[@class='button-button-2Fo5k button-size-m-7jtw4 button-primary-1RhOG']"));
-        WebElement element = driver.findElement(By.xpath("//div[@data-marker='delivery-filter/container']/label[@class='checkbox-checkbox-7igZ6 checkbox-size-s-yHrZq']"));
-        Select sortPrice = new Select(driver.findElement(By.xpath("//div[@class='sort-select-3QxXG select-select-box-3LBfK select-size-s-2gvAy']/select[@class='select-select-3CHiM']")));
-        List<WebElement> webElements = driver.findElements(By.xpath("//div[@class='items-items-38oUm']/div[@data-marker='item']"));
+
+        By categoryLocator = By.xpath("//select[@id='category']");
+        By productSearchLocator = By.xpath("//input[@id='search']");
+        By citySearchLocator = By.xpath("//div[@class='main-text-2PaZG']");
+        By citySearchLineLocator = By.xpath("//input[@class='suggest-input-3p8yi']");
+        By citySelectionLocator = By.xpath("//ul[@class='suggest-suggests-bMAdj']/li[@class='suggest-suggest-1wwEm text-text-1PdBw text-size-m-4mxHN']");
+        By citySearchButtonLocator = By.xpath("//button[@class='button-button-2Fo5k button-size-m-7jtw4 button-primary-1RhOG']");
+        By elementLocator = By.xpath("//div[@data-marker='delivery-filter/container']/label[@class='checkbox-checkbox-7igZ6 checkbox-size-s-yHrZq']");
+        By sortPriceLocator = By.xpath("//div[@class='sort-select-3QxXG select-select-box-3LBfK select-size-s-2gvAy']/select[@class='select-select-3CHiM']");
+        By webElementsLocator = By.xpath("//div[@class='items-items-38oUm']/div[@data-marker='item']");
+        By printerNameLocator = By.xpath(".//h3[@class='title-root-395AQ iva-item-title-1Rmmj title-list-1IIB_ title-root_maxHeight-3obWc text-text-1PdBw text-size-s-1PUdo text-bold-3R9dt']");
+        By printerPriceLocator = By.xpath(".//span[@class='price-text-1HrJ_ text-text-1PdBw text-size-s-1PUdo']");
 
 
         System.out.println("Получаем все значения в списки товаров");
-
-        category.getOptions().forEach(option->{
-            System.out.println("Value = "+option.getAttribute("value")+";Text = "+option.getText());
+        Select category = new Select(driver.findElement(categoryLocator));
+        category.getOptions().forEach(option -> {
+            System.out.println("Value = " + option.getAttribute("value") + ";Text = " + option.getText());
         });
         category.selectByVisibleText("Оргтехника и расходники");
         System.out.println("Выбор в категории товаров - \"Оргтехника и расходники\"");
 
-
+        WebElement productSearch = driver.findElement(productSearchLocator);
         productSearch.sendKeys("Принтер");
         System.out.println("В поисковой строке продукта ввод: \"Принтер\"");
 
-
+        WebElement citySearch = driver.findElement(citySearchLocator);
         citySearch.click();
         System.out.println("Клик по выбору города");
 
-
+        WebElement citySearchLine = driver.findElement(citySearchLineLocator);
         citySearchLine.sendKeys("Владивосток");
         System.out.println("В поисковой строке города ввод:\"Владивосток\"");
 
-
+        WebElement citySelection = driver.findElement(citySelectionLocator);
         citySelection.click();
         System.out.println("Клик по предложенному значению");
 
-
+        WebElement citySearchButton = driver.findElement(citySearchButtonLocator);
         citySearchButton.click();
         System.out.println("Клик по кнопке поиска объявлений в выбранном городе");
 
-
+        WebElement element = driver.findElement(elementLocator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         System.out.println("Скрол вниз до чекбокса");
 
@@ -67,21 +70,19 @@ public class lesson {
         }
         System.out.println("Устанавливаем чекбокс активным");
 
-
-        sortPrice.getOptions().forEach(option->{
-            System.out.println("Value = "+option.getAttribute("value")+";Text = "+option.getText());
+        Select sortPrice = new Select(driver.findElement(sortPriceLocator));
+        sortPrice.getOptions().forEach(option -> {
+            System.out.println("Value = " + option.getAttribute("value") + ";Text = " + option.getText());
         });
         sortPrice.selectByVisibleText("Дороже");
         System.out.println("Значение сортировки: \"Дороже\"");
 
         System.out.println("Получаем первые три принтера");
-
-
+        List<WebElement> webElements = driver.findElements(webElementsLocator);
         for (int i = 0; i < 3; i++) {
-            System.out.println("Название " + webElements.get(i).findElement(By.xpath(".//h3[@class='title-root-395AQ iva-item-title-1Rmmj title-list-1IIB_ title-root_maxHeight-3obWc text-text-1PdBw text-size-s-1PUdo text-bold-3R9dt']")).getText());
-            System.out.println("Цена " + webElements.get(i).findElement(By.xpath(".//span[@class='price-text-1HrJ_ text-text-1PdBw text-size-s-1PUdo']")).getText());
+            System.out.println("Название " + webElements.get(i).findElement(printerNameLocator).getText());
+            System.out.println("Цена " + webElements.get(i).findElement(printerPriceLocator).getText());
         }
         driver.quit();
-
     }
 }
